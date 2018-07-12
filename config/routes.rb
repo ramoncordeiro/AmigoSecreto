@@ -1,27 +1,14 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  get 'members/create'
-
-  get 'members/destroy'
-
-  get 'members/update'
-
-  get 'campaigns/show'
-
-  get 'campaigns/index'
-
-  get 'campaigns/create'
-
-  get 'campaigns/update'
-
-  get 'campaigns/destroy'
-
-  get 'campaigns/raffle'
-
-  get 'pages/home'
-
   devise_for :users, :controllers => { registrations: 'registrations' }
-  mount Sidekiq::Web => '/sidekiq'  #na pratica nao monta ou monta com senha
-  #foi montado apenas para teste e para didatica
+  mount Sidekiq::Web => '/sidekiq'
+
+  root to: 'pages#home'
+  resources :campaigns, except: [:new] do
+    post 'raffle', on: :member  #When want use with id, uses :member (it show /campaigns/:id/raffle)
+    # post 'raffle', on: :collection    #withou id is :collection (it show /campaigns/raffle)
+  end
+  get 'members/:token/opened', to: 'members#opened'
+  resources :members, only: [:create, :destroy, :update]
 end
