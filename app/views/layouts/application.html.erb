@@ -12,7 +12,7 @@
   <body>
 
     <header>
-      <%= render "shared/navbar" %>
+      <%= render "shared/navbar" %> <!-- AQUI NAO PRECISA SER INSERIDO COM UNDERSCORE -->
     </header>
 
     <main>
@@ -20,6 +20,10 @@
         <%= yield %>
       </div>
     </main>
+
+    <footer>
+      <%= render "shared/footer" %>  <! -- AQUI O ARQUIVO NAO PRECISA SER CHAMADO COM UNDERSCORE -->
+    </footer>
 
   </body>
 </html>
